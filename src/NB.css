@@ -1,0 +1,23 @@
+.property-image-frame {
+  height: 220px;
+}
+
+.property-image-frame .property-image {
+  height: 100%;
+  border: none;
+}
+
+.property-card .btn {
+  margin-top: auto;
+}
+
+/* Slightly smaller text for "Rent Now" buttons only */
+.property-card .btn.rent-now {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .property-image {
+    height: 180px;
+  }
+}

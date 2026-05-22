@@ -1,0 +1,344 @@
+/* ── Motion preferences ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Page route change ─────────────────────────────────────────────── */
+.page-enter {
+  animation: pageEnter 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Scroll reveal ─────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Site shell load ───────────────────────────────────────────────── */
+.site-shell {
+  animation: shellFade 0.5s ease forwards;
+}
+
+.contact-strip {
+  animation: slideDown 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.topbar {
+  animation: slideDown 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s backwards;
+}
+
+@keyframes shellFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Hero carousel ─────────────────────────────────────────────────── */
+.hero-image {
+  animation: heroZoom 18s ease-in-out infinite alternate;
+}
+
+.hero-image--swap {
+  animation: heroFadeSwap 0.7s ease forwards;
+}
+
+.hero-overlay > * {
+  animation: heroContentIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.hero-overlay .hero-overline {
+  animation-delay: 0.1s;
+}
+
+.hero-overlay h1 {
+  animation-delay: 0.18s;
+}
+
+.hero-overlay > p {
+  animation-delay: 0.26s;
+}
+
+.hero-actions {
+  animation-delay: 0.34s;
+}
+
+@keyframes heroZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes heroFadeSwap {
+  from {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes heroContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.carousel-dot {
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.carousel-dot:hover {
+  transform: scale(1.2);
+}
+
+.carousel-dot.active {
+  transform: scale(1.15);
+}
+
+/* ── Property cards ────────────────────────────────────────────────── */
+.property-card {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
+  border-color: color-mix(in srgb, var(--accent) 25%, var(--border));
+}
+
+.property-card .property-image {
+  transition: transform 0.45s ease;
+}
+
+.property-card:hover .property-image {
+  transform: scale(1.03);
+}
+
+.property-image-frame {
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+}
+
+.property-image-frame .property-image {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* ── Buttons & nav ─────────────────────────────────────────────────── */
+.btn {
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.nav-pill {
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.nav-pill:hover {
+  transform: translateY(-1px);
+}
+
+/* ── API status pulse ──────────────────────────────────────────────── */
+.api-status-dot {
+  transition: background-color 0.4s ease;
+}
+
+.api-status-dot--checking {
+  animation: statusPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+/* ── Skeleton loading ──────────────────────────────────────────────── */
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #ececec 0%, #f8f8f8 50%, #ececec 100%) !important;
+  background-size: 200% 100% !important;
+  animation: shimmer 1.4s ease-in-out infinite;
+  color: transparent !important;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Filters ───────────────────────────────────────────────────────── */
+.filters input,
+.filters select {
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+/* ── Property detail hero ──────────────────────────────────────────── */
+.property-detail-hero {
+  animation: heroFadeSwap 0.6s ease forwards;
+}
+
+.property-detail-thumb {
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.property-detail-thumb:hover {
+  transform: scale(1.04);
+}
+
+.property-detail-thumb.active {
+  transform: scale(1.02);
+}
+
+/* ── Footer ────────────────────────────────────────────────────────── */
+.footer {
+  animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s backwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── About page stats ─────────────────────────────────────────────── */
+.about-pillars article,
+.stats article {
+  transition: transform 0.3s ease;
+}
+
+.about-pillars article:hover,
+.stats article:hover {
+  transform: translateY(-3px);
+}
+
+/* ── Checkout ─────────────────────────────────────────────────────── */
+.checkout-property-card,
+.checkout-summary-card,
+.checkout-form {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.checkout-property-card:hover,
+.checkout-summary-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+@media (max-width: 768px) {
+  .site-shell {
+  animation: none;
+  }
+  .contact-strip {
+  animation: none;
+  }
+  .topbar {
+  animation: none;
+  }
+  .footer {
+  animation: none;
+  }
+}

@@ -1,0 +1,416 @@
+/* ── Global box model & zoom prevention ──────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent iOS auto-zoom on ALL inputs — font-size must be >= 16px on focus */
+input,
+select,
+textarea {
+  font-size: 16px !important;
+}
+
+/* But keep visual size for desktop — scale down with transform trick isn't needed;
+   just ensure 16px on mobile via media query override below */
+
+/* ── Layout ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 20px 20px 32px;
+  }
+
+  .contact-strip {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 14px 14px 28px;
+  }
+
+  .section {
+    margin-top: 10px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* Touch-friendly controls */
+  .btn {
+    min-height: 44px;
+    padding: 12px 16px;
+  }
+
+  .property-card .btn {
+    flex: 1 1 calc(50% - 4px);
+    min-width: 0;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .hero-overlay h1 {
+    font-size: clamp(1.35rem, 6vw, 1.75rem);
+  }
+
+  .hero-overlay p {
+    font-size: 0.9rem;
+  }
+
+  .hero-image {
+    height: min(56vw, 360px);
+  }
+
+  .property-detail-hero {
+    height: min(50vw, 280px);
+  }
+
+  .property-detail-thumb {
+    width: 72px;
+    height: 56px;
+  }
+
+  .property-detail-facts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .property-detail-actions {
+    flex-direction: column;
+  }
+
+  .property-detail-actions .btn {
+    width: 100%;
+  }
+
+  .about-pillars {
+    grid-template-columns: 1fr;
+  }
+
+  .about-page .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    padding: 14px 16px 20px;
+    text-align: center;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .grid {
+    gap: 12px;
+  }
+
+  .property-card {
+    padding: 14px;
+  }
+
+  .property-card .btn {
+    flex: 1 1 100%;
+  }
+
+  .checkout-page.section {
+    margin-top: 0;
+  }
+
+  .checkout-layout {
+    gap: 14px;
+  }
+
+  .checkout-date-row {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-form {
+    width: 100%;
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .checkout-property-facts {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .checkout-property-card,
+  .checkout-summary-card {
+    border-radius: 10px;
+  }
+
+  /* Prevent iOS zoom — 16px already forced globally above */
+  .checkout-label input,
+  .checkout-label select {
+    font-size: 16px;
+  }
+
+  .checkout-success-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .checkout-success-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .checkout-property-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Property cards ─────────────────────────────────────────────────── */
+
+.property-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* ── Checkout full responsive overhaul ──────────────────────────────── */
+
+@media (max-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .checkout-sidebar {
+    position: static;
+    order: 2;
+  }
+
+  .checkout-main {
+    order: 1;
+  }
+
+  .checkout-mobile-total {
+    display: flex;
+  }
+
+  .checkout-page {
+    padding-inline: 0;
+  }
+
+  .checkout-property-card,
+  .checkout-summary-card {
+    border-radius: 12px;
+  }
+
+  .checkout-submit {
+    position: sticky;
+    bottom: 12px;
+    z-index: 5;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@media (max-width: 768px) {
+  .checkout-header {
+    margin-bottom: 20px;
+  }
+
+  .checkout-lead {
+    font-size: 0.95rem;
+  }
+
+  .checkout-steps {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .checkout-steps::-webkit-scrollbar {
+    display: none;
+  }
+
+  .checkout-step {
+    flex-shrink: 0;
+  }
+
+  .checkout-line-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .checkout-line-item strong {
+    font-size: 1rem;
+  }
+
+  .checkout-total-row--grand strong {
+    font-size: 1.2rem;
+  }
+
+  .checkout-form {
+    padding: 18px 16px 20px;
+    border-radius: 12px;
+  }
+
+  .checkout-success {
+    margin-inline: 0;
+    padding: 28px 18px;
+  }
+
+  /* Stack date row on small screens */
+  .checkout-date-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* Full-width form labels */
+  .checkout-label {
+    width: 100%;
+  }
+
+  .checkout-label input,
+  .checkout-label select {
+    width: 100%;
+    font-size: 16px; /* prevent iOS zoom */
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-property-body {
+    padding: 14px 16px 16px;
+  }
+
+  .checkout-summary-card {
+    padding: 16px;
+  }
+
+  .checkout-property-body h2 {
+    font-size: 1.1rem;
+  }
+
+  .checkout-header h1 {
+    font-size: 1.35rem;
+  }
+
+  .checkout-kicker {
+    font-size: 0.7rem;
+  }
+
+  .checkout-form {
+    padding: 14px 12px 16px;
+  }
+
+  .checkout-fieldset legend {
+    font-size: 0.95rem;
+  }
+
+  .checkout-nights-pill {
+    font-size: 0.8rem;
+  }
+}
+
+/* ── Admin ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .admin-top {
+    flex-direction: column;
+  }
+
+  .admin-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-table-wrap {
+    margin: 0 -14px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .admin-table {
+    font-size: 0.82rem;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 10px 8px;
+  }
+
+  .admin-row-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .admin-form {
+    max-width: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-tabs {
+    flex-direction: column;
+  }
+
+  .admin-tab {
+    width: 100%;
+    text-align: center;
+  }
+
+  .admin-donut {
+    width: 140px;
+    height: 140px;
+  }
+
+  .admin-donut-hole {
+    top: 46px;
+    width: 76px;
+    height: 76px;
+  }
+}
+
+/* ── Overflow safety ────────────────────────────────────────────────── */
+
+.section-head,
+.property-card h3,
+.checkout-line-item {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.error-text,
+.success-text {
+  overflow-wrap: anywhere;
+}

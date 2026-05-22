@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Canal View Apartment",
+    "city": "Amsterdam",
+    "price": "₦2,450 / month",
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 850,
+    "type": "Rent",
+    "badge": "Available",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [],
+    "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+  },
+  {
+    "id": 2,
+    "title": "Jordaan Townhouse",
+    "city": "Amsterdam",
+    "price": "₦875,000",
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 1450,
+    "type": "Sale",
+    "badge": "New",
+    "image": "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [],
+    "videos": ["https://www.w3schools.com/html/movie.mp4"]
+  },
+  {
+    "id": 3,
+    "title": "Luxury Short Stay Suite",
+    "city": "Amsterdam",
+    "price": "₦320 / night",
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 620,
+    "type": "Rent",
+    "badge": "Luxury",
+    "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
+    "gallery": [],
+    "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+  }
+]
