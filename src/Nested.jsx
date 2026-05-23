@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import './Nested.css'
 import { getHealth } from './api'
+import ChatBot from './ChatBot'
 
 const navPillStyle = ({ isActive }) => ({
   padding: '8px 12px',
@@ -121,6 +122,7 @@ const Nested = () => {
       <footer className="footer">
         <p>NawftHomes - Challenge 22, Nigeria - 091200391</p>
       </footer>
+      <ChatBot />
     </div>
   )
 }

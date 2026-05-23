@@ -1,0 +1,236 @@
+import React, { useEffect, useRef, useState } from 'react'
+import './ChatBot.css'
+
+const SYSTEM_PROMPT = `You are Nawft, the friendly AI assistant for NawftHomes — a real estate agency based in Ibadan, Nigeria (office at 16, Islamic Shopping Mall, Mall Block D (Upstairs), Bashorun, Ibadan).
+
+NawftHomes specialises in:
+- Property rentals (short stay and long term), priced per night or per month in Nigerian Naira (₦)
+- Property sales and purchases
+- Property lettings and management
+- Luxury listings
+
+Key details:
+- Phone: 091200391
+- Email: nawfthomes@gmail.com
+- Office visits and viewings are by appointment only — at least 24 hours notice required
+- Payments are in Nigerian Naira (₦)
+- The website has a Bookings page, a Checkout page, and an About page
+
+Your job is to help site visitors:
+- Find the right property type (rent vs buy, budget, bedrooms, location in Ibadan)
+- Understand the booking and checkout process
+- Get contact details and office info
+- Answer questions about listings, pricing, and availability
+- Guide them to the right page on the site
+
+Keep replies concise, warm, and helpful. If you don't know specific live listing details, tell them to call 091200391 or check the Bookings page. Never make up prices or availability. Always respond in English.`
+
+const SUGGESTED = [
+  'What properties are available?',
+  'How do I book a viewing?',
+  'What areas do you cover?',
+  'How does checkout work?',
+]
+
+const BotIcon = () => (
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+    <rect width="200" height="200" fill="#ffffff" rx="10"/>
+    <polygon points="100,28 150,72 50,72" fill="#111111"/>
+    <rect x="46" y="68" width="108" height="72" fill="#111111"/>
+    <rect x="76" y="104" width="26" height="36" rx="2" fill="#ffffff"/>
+    <rect x="54" y="80" width="20" height="16" rx="2" fill="#ffffff"/>
+    <rect x="126" y="80" width="20" height="16" rx="2" fill="#ffffff"/>
+    <rect x="124" y="20" width="9" height="30" fill="#111111"/>
+  </svg>
+)
+
+const ThinkingDots = () => (
+  <div className="cb-thinking">
+    <span/><span/><span/>
+  </div>
+)
+
+let msgId = 0
+const uid = () => ++msgId
+
+export default function ChatBot() {
+  const [open, setOpen] = useState(false)
+  const [messages, setMessages] = useState([
+    {
+      id: uid(),
+      role: 'assistant',
+      text: "Hi! I'm Nawft 👋 Your NawftHomes assistant. Ask me anything about our properties, rentals, or how to book a viewing.",
+    },
+  ])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const bottomRef = useRef(null)
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, loading])
+
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 120)
+  }, [open])
+
+  const sendMessage = async (text) => {
+    const trimmed = text.trim()
+    if (!trimmed || loading) return
+    setInput('')
+    setError('')
+
+    const userMsg = { id: uid(), role: 'user', text: trimmed }
+    setMessages((prev) => [...prev, userMsg])
+    setLoading(true)
+
+    // Build history for API (exclude the greeting)
+    const history = [...messages.slice(1), userMsg].map((m) => ({
+      role: m.role,
+      content: m.text,
+    }))
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: SYSTEM_PROMPT,
+          messages: history,
+        }),
+      })
+
+      if (!res.ok) throw new Error('API error')
+      const data = await res.json()
+      const reply = data.content?.find((b) => b.type === 'text')?.text ?? 'Sorry, I could not get a response.'
+      setMessages((prev) => [...prev, { id: uid(), role: 'assistant', text: reply }])
+    } catch {
+      setError('Something went wrong. Please try again or call 091200391.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleKey = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      sendMessage(input)
+    }
+  }
+
+  const showSuggested = messages.length === 1 && !loading
+
+  return (
+    <>
+      {/* Floating button */}
+      <button
+        className={`cb-fab ${open ? 'cb-fab--open' : ''}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-label={open ? 'Close chat' : 'Open chat assistant'}
+        type="button"
+      >
+        {open ? (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        ) : (
+          <BotIcon />
+        )}
+        {!open && <span className="cb-fab-ping" aria-hidden/>}
+      </button>
+
+      {/* Chat panel */}
+      <div className={`cb-panel ${open ? 'cb-panel--open' : ''}`} role="dialog" aria-label="NawftHomes chat assistant">
+        {/* Header */}
+        <div className="cb-header">
+          <div className="cb-header-avatar">
+            <BotIcon />
+          </div>
+          <div className="cb-header-info">
+            <p className="cb-header-name">Nawft</p>
+            <p className="cb-header-sub">NawftHomes Assistant · Online</p>
+          </div>
+          <button className="cb-close" onClick={() => setOpen(false)} aria-label="Close" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div className="cb-messages">
+          {messages.map((msg) => (
+            <div key={msg.id} className={`cb-msg cb-msg--${msg.role}`}>
+              {msg.role === 'assistant' && (
+                <div className="cb-msg-avatar"><BotIcon /></div>
+              )}
+              <div className="cb-msg-bubble">
+                {msg.text.split('\n').map((line, i) => (
+                  <span key={i}>{line}{i < msg.text.split('\n').length - 1 && <br/>}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {loading && (
+            <div className="cb-msg cb-msg--assistant">
+              <div className="cb-msg-avatar"><BotIcon /></div>
+              <div className="cb-msg-bubble"><ThinkingDots /></div>
+            </div>
+          )}
+
+          {error && (
+            <div className="cb-error">{error}</div>
+          )}
+
+          {/* Suggested prompts */}
+          {showSuggested && (
+            <div className="cb-suggested">
+              {SUGGESTED.map((s) => (
+                <button key={s} className="cb-chip" type="button" onClick={() => sendMessage(s)}>
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div ref={bottomRef}/>
+        </div>
+
+        {/* Input */}
+        <div className="cb-input-wrap">
+          <textarea
+            ref={inputRef}
+            className="cb-input"
+            rows={1}
+            placeholder="Ask about properties, rentals, viewings…"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKey}
+            disabled={loading}
+          />
+          <button
+            className="cb-send"
+            type="button"
+            onClick={() => sendMessage(input)}
+            disabled={loading || !input.trim()}
+            aria-label="Send"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+        <p className="cb-footer-note">Powered by Claude · NawftHomes AI</p>
+      </div>
+
+      {/* Backdrop on mobile */}
+      {open && <div className="cb-backdrop" onClick={() => setOpen(false)}/>}
+    </>
+  )
+}
