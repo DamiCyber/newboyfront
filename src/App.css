@@ -681,16 +681,20 @@
   }
 
   .hero-carousel .hero-actions {
-    margin-top: 12px;
+    margin-top: 20px;
     transform: none;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 8px;
   }
 
   .hero-carousel .hero-actions .btn {
-    width: 100%;
+    width: auto;
+    flex: 0 1 auto;
     text-align: center;
     justify-content: center;
+    padding: 8px 14px;
+    font-size: 0.82rem;
   }
 
   .hero-carousel .hero-overlay > p:not(.hero-overline):not(.success-text) {
@@ -801,10 +805,6 @@
 
   .checkout-kicker {
     font-size: 0.7rem;
-  }
-
-  .hero-carousel .hero-actions {
-    transform: translateY(-24px);
   }
 
   .hero-carousel .carousel-dots {
