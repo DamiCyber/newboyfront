@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './ChatBot.css'
 
-const SYSTEM_PROMPT = `You are Nawft, the friendly AI assistant for NawftHomes — a real estate agency based in Ibadan, Nigeria (office at 16, Islamic Shopping Mall, Mall Block D (Upstairs), Bashorun, Ibadan).
+const SYSTEM_PROMPT = `You are Nawft, the friendly AI assistant for nawfhomes — a real estate agency based in Ibadan, Nigeria (office at 16, Islamic Shopping Mall, Mall Block D (Upstairs), Bashorun, Ibadan).
 
 NawftHomes specialises in:
 - Property rentals (short stay and long term), priced per night or per month in Nigerian Naira (₦)
@@ -10,8 +10,8 @@ NawftHomes specialises in:
 - Luxury listings
 
 Key details:
-- Phone: 091200391
-- Email: nawfthomes@gmail.com
+- Phone: 09027512008
+- Email: nawfhomes@gmail.com
 - Office visits and viewings are by appointment only — at least 24 hours notice required
 - Payments are in Nigerian Naira (₦)
 - The website has a Bookings page, a Checkout page, and an About page
@@ -23,7 +23,7 @@ Your job is to help site visitors:
 - Answer questions about listings, pricing, and availability
 - Guide them to the right page on the site
 
-Keep replies concise, warm, and helpful. If you don't know specific live listing details, tell them to call 091200391 or check the Bookings page. Never make up prices or availability. Always respond in English.`
+Keep replies concise, warm, and helpful. If you don't know specific live listing details, tell them to call 09027512008 or check the Bookings page. Never make up prices or availability. Always respond in English.`
 
 const SUGGESTED = [
   'What properties are available?',
@@ -109,7 +109,7 @@ export default function ChatBot() {
       const reply = data.content?.find((b) => b.type === 'text')?.text ?? 'Sorry, I could not get a response.'
       setMessages((prev) => [...prev, { id: uid(), role: 'assistant', text: reply }])
     } catch {
-      setError('Something went wrong. Please try again or call 091200391.')
+      setError('Something went wrong. Please try again or call 09027512008.')
     } finally {
       setLoading(false)
     }

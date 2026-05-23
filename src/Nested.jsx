@@ -44,7 +44,7 @@ const Nested = () => {
     <div className="site-shell">
       <div className="contact-strip contact-strip--dark">
         <p>Challenge 22, Nigeria</p>
-        <a href="tel:091200391">091200391</a>
+        <a href="tel:09027512008">09027512008</a>
         <p>
           <strong>Important:</strong> Office visits by appointment only.
         </p>
@@ -52,9 +52,9 @@ const Nested = () => {
       <header className="topbar site-header">
         <div className="topbar-inner">
           <div className="topbar-brand">
-            <p className="brand-kicker">Newboy STYLE</p>
+            <p className="brand-kicker">Oluwanifemi STYLE</p>
             <Link to="/" className="brand">
-              NawftHomes
+              nawfhomes
             </Link>
           </div>
           <button
@@ -120,7 +120,7 @@ const Nested = () => {
         </div>
       </main>
       <footer className="footer">
-        <p>NawftHomes - Challenge 22, Nigeria - 091200391</p>
+        <p>nawfhomes - Challenge 22, Nigeria - 09027512008</p>
       </footer>
       <ChatBot />
     </div>

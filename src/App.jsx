@@ -79,8 +79,8 @@ const HomePage = ({ properties, loading, error }) => {
               <a href="#discover" className="btn btn-primary">
                 View listings
               </a>
-              <a href="tel:091200391" className="btn btn-secondary">
-                Call 091200391
+              <a href="tel:09027512008" className="btn btn-secondary">
+                Call 09027512008
               </a>
             </div>
             <p className="success-text">

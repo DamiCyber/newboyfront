@@ -427,7 +427,7 @@ const AdminPage = ({ onListingsChange }) => {
     <section className="section admin-page">
       <header className="admin-top">
         <div>
-          <p className="admin-kicker">NawftHomes · Admin</p>
+          <p className="admin-kicker">NawfHomes · Admin</p>
           <h1>Dashboard</h1>
           <p className="meta">Create listings for the home page, edit or remove any property.</p>
         </div>

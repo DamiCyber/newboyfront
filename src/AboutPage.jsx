@@ -7,7 +7,7 @@ const AboutPage = () => {
     <section className="section about-page">
       <Reveal>
         <header className="about-intro">
-          <p className="about-kicker">About NawftHomes</p>
+          <p className="about-kicker">About NawfHomes</p>
           <h1>Thoughtful real estate in Ibadan and beyond</h1>
           <p className="about-lead">
             We help families, professionals, and investors find homes they are proud to live in — whether
@@ -20,7 +20,7 @@ const AboutPage = () => {
         <div className="about-story">
           <h2>Who we are</h2>
           <p>
-            NawftHomes was built on a simple idea: property decisions should feel clear, not overwhelming.
+            NawfHomes was built on a simple idea: property decisions should feel clear, not overwhelming.
             Our team combines local market knowledge with straightforward advice — no jargon, no pressure,
             just honest guidance from first viewing to final keys.
           </p>
@@ -79,13 +79,13 @@ const AboutPage = () => {
         <div className="about-visit">
           <h2>Visit us</h2>
           <p>
-            <strong>NawftHomes Office</strong>
+            <strong>NawfHomes Office</strong>
             <br />
             16, Islamic Shopping Mall, Mall Block D (Upstairs), Bashorun, Ibadan
             <br />
-            <a href="mailto:info@nbmakelaardij.nl">nawfthomes@gmail.com</a>
+            <a href="mailto:info@nbmakelaardij.nl">nawfhomes@gmail.com</a>
             <br />
-            <a href="tel:+31206768022">091200391</a>
+            <a href="tel:+31206768022">09027512008</a>
           </p>
           <p className="about-note">
             <strong>Please note:</strong> Office visits and property viewings are by appointment only.

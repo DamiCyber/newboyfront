@@ -70,7 +70,7 @@ const AppLoader = ({ onDone }) => {
           textTransform: 'uppercase',
           color: 'rgba(255,255,255,0.4)',
           marginBottom: 5,
-        }}>Newboy Style</p>
+        }}>Oluwanifemi STYLE</p>
         <p style={{
           margin: 0,
           fontFamily: 'Georgia, serif',
@@ -78,7 +78,7 @@ const AppLoader = ({ onDone }) => {
           fontWeight: 700,
           color: '#ffffff',
           letterSpacing: '0.04em',
-        }}>NawftHomes</p>
+        }}>nawfhomes</p>
       </div>
 
       {/* Progress bar — fills over 2.4s then holds full */}
