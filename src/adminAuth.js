@@ -20,7 +20,8 @@ export function isAdminLoggedIn() {
 }
 
 export function adminHeaders() {
-  const key = getAdminKey()
+  // Use the key stored in session (entered at login), falling back to the env default
+  const key = getAdminKey() || (import.meta.env.VITE_ADMIN_KEY ?? '')
   return key
     ? {
         'Content-Type': 'application/json',
