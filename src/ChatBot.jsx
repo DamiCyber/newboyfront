@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './ChatBot.css'
 
+const BASE_URL = import.meta.env.VITE_API_URL ?? ''
 
 const SUGGESTED = [
   'What properties are available?',
@@ -69,7 +70,7 @@ export default function ChatBot() {
     }))
 
     try {
-      const res = await fetch('http://localhost:4000/api/chat', {
+      const res = await fetch(`${BASE_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: history }),
