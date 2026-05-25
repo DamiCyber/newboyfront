@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './ChatBot.css'
 
-const BASE_URL = import.meta.env.VITE_API_URL ?? ''
-
 const SUGGESTED = [
   'What properties are available?',
   'How do I book a viewing?',
@@ -63,24 +61,20 @@ export default function ChatBot() {
     setMessages((prev) => [...prev, userMsg])
     setLoading(true)
 
-    // Build history for API (exclude the greeting)
-    const history = [...messages.slice(1), userMsg].map((m) => ({
-      role: m.role,
-      content: m.text,
-    }))
-
     try {
-      const res = await fetch(`${BASE_URL}/api/chat`, {
+      const history = messages.filter(m => m.role !== 'system')
+
+      const res = await fetch('https://newboy-1.onrender.com/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history }),
+        body: JSON.stringify({ message: trimmed, history }),
       })
 
-      if (!res.ok) throw new Error('API error')
       const data = await res.json()
-      const reply = data.text ?? 'Sorry, I could not get a response.'
-      setMessages((prev) => [...prev, { id: uid(), role: 'assistant', text: reply }])
-    } catch {
+      if (!res.ok) throw new Error(data.error || 'Server error')
+
+      setMessages(prev => [...prev, { id: uid(), role: 'assistant', text: data.reply }])
+    } catch (err) {
       setError('Something went wrong. Please try again or call 09027512008.')
     } finally {
       setLoading(false)

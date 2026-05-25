@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Reveal from './Reveal'
 import './NB.css'
 
@@ -17,6 +17,7 @@ const SkeletonCard = () => {
 }
 
 const PropertyCard = ({ property, index }) => {
+  const navigate = useNavigate()
   return (
     <Reveal delay={Math.min(index * 60, 360)}>
       <Link
@@ -39,17 +40,21 @@ const PropertyCard = ({ property, index }) => {
           </p>
           <div className="property-card-actions">
             <span className="btn btn-secondary">View Details</span>
-            <Link
+            <button
               className={`btn btn-primary ${property.type === 'Rent' ? 'rent-now' : ''}`}
-              to="/checkout"
-              state={{
-                listingKey: property.listingKey ?? String(property.id),
-                intent: property.type === 'Rent' ? 'rent' : 'buy',
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                navigate('/checkout', {
+                  state: {
+                    listingKey: property.listingKey ?? String(property.id),
+                    intent: property.type === 'Rent' ? 'rent' : 'buy',
+                  },
+                })
               }}
-              onClick={(e) => e.stopPropagation()}
             >
               {property.type === 'Rent' ? 'Rent Now' : 'Buy Now'}
-            </Link>
+            </button>
           </div>
         </article>
       </Link>

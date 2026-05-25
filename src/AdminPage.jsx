@@ -164,6 +164,22 @@ const AdminPage = ({ onListingsChange }) => {
     if (authed && tab === 'payments') loadPayments()
   }, [authed, tab, loadPayments])
 
+  const resetStats = () => {
+    setStats((prev) =>
+      prev
+        ? {
+            ...prev,
+            bookings: {
+              total: 0,
+              confirmedRevenue: 0,
+              byStatus: { CONFIRMED: 0, PENDING: 0, CANCELLED: 0 },
+            },
+          }
+        : prev,
+    )
+    setSuccess('Stats display reset. Reload dashboard to fetch live data again.')
+  }
+
   const viewReceipt = async (reference) => {
     setReceiptLoading(true)
     setReceipt(null)
@@ -395,6 +411,16 @@ const AdminPage = ({ onListingsChange }) => {
 
       {tab === 'overview' && stats && !loading && (
         <div className="admin-overview">
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '12px' }}>
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={resetStats}
+              title="Clear the stats counters shown below"
+            >
+              ↺ Reset stats
+            </button>
+          </div>
           <div className="admin-stat-grid">
             <article className="admin-stat-card">
               <span>Active on homepage</span>
