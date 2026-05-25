@@ -119,6 +119,8 @@ const AdminPage = ({ onListingsChange }) => {
   const [paymentsError, setPaymentsError] = useState('')
   const [receipt, setReceipt] = useState(null)
   const [receiptLoading, setReceiptLoading] = useState(false)
+  const [imageUploading, setImageUploading] = useState(false)
+  const [imageUploadError, setImageUploadError] = useState('')
 
   const loadDashboard = useCallback(async () => {
     if (!isAdminLoggedIn()) return
@@ -279,6 +281,33 @@ const AdminPage = ({ onListingsChange }) => {
   const resetForm = () => {
     setForm(EMPTY_FORM)
     setEditing(null)
+  }
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setImageUploading(true)
+    setImageUploadError('')
+    try {
+      const adminKey = sessionStorage.getItem('adminKey') || localStorage.getItem('adminKey') || ''
+      const data = new FormData()
+      data.append('image', file)
+      const res = await fetch('https://newboy-1.onrender.com/api/admin/upload', {
+        method: 'POST',
+        headers: { 'X-Admin-Key': adminKey },
+        body: data,
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error || `Upload failed (${res.status})`)
+      }
+      const { url } = await res.json()
+      setForm((prev) => ({ ...prev, imageUrl: url }))
+    } catch (err) {
+      setImageUploadError(err.message || 'Image upload failed')
+    } finally {
+      setImageUploading(false)
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -769,8 +798,42 @@ const AdminPage = ({ onListingsChange }) => {
           {/* ── Section: Media ── */}
           <fieldset className="admin-fieldset admin-fieldset--section">
             <legend>Media</legend>
+
+            {/* Upload from device */}
             <label className="admin-label">
-              Image URL
+              Upload image from device
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 4 }}>
+                <label
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    padding: '8px 16px', borderRadius: 6, cursor: 'pointer',
+                    background: 'var(--accent, #2563eb)', color: '#fff',
+                    fontSize: 14, fontWeight: 500, whiteSpace: 'nowrap',
+                    opacity: imageUploading ? 0.6 : 1,
+                  }}
+                >
+                  {imageUploading ? 'Uploading…' : '📁 Choose file'}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    disabled={imageUploading}
+                    onChange={handleImageUpload}
+                  />
+                </label>
+                {imageUploading && <span style={{ fontSize: 13, color: '#888' }}>Please wait…</span>}
+              </div>
+              {imageUploadError && (
+                <span style={{ fontSize: 13, color: 'var(--error, #dc2626)', marginTop: 4, display: 'block' }}>
+                  {imageUploadError}
+                </span>
+              )}
+              <span className="admin-field-hint">JPG, PNG, WebP — max 5 MB. Uploads to your server.</span>
+            </label>
+
+            {/* Or paste a URL */}
+            <label className="admin-label" style={{ marginTop: 14 }}>
+              Or paste an image URL
               <input
                 name="imageUrl"
                 type="url"
@@ -778,29 +841,43 @@ const AdminPage = ({ onListingsChange }) => {
                 onChange={onChange}
                 placeholder="https://images.unsplash.com/…"
               />
-              <span className="admin-field-hint">Paste a direct image link (Unsplash, Cloudinary, etc.)</span>
+              <span className="admin-field-hint">Direct image link (Unsplash, Cloudinary, etc.)</span>
             </label>
+
+            {/* Preview */}
             {form.imageUrl && (
-              <div style={{ marginTop: 8 }}>
+              <div style={{ marginTop: 10, position: 'relative', display: 'inline-block' }}>
                 <img
                   src={form.imageUrl}
                   alt="Preview"
                   onError={(e) => { e.currentTarget.style.display = 'none' }}
                   style={{ width: '100%', maxWidth: 320, height: 180, objectFit: 'cover', borderRadius: 8, border: '1px solid var(--border)' }}
                 />
+                <button
+                  type="button"
+                  onClick={() => setForm((prev) => ({ ...prev, imageUrl: '' }))}
+                  title="Remove image"
+                  style={{
+                    position: 'absolute', top: 6, right: 6,
+                    background: 'rgba(0,0,0,0.55)', color: '#fff',
+                    border: 'none', borderRadius: '50%', width: 24, height: 24,
+                    cursor: 'pointer', fontSize: 14, lineHeight: '24px', textAlign: 'center',
+                  }}
+                >×</button>
               </div>
             )}
+
             <label className="admin-label" style={{ marginTop: 14 }}>
-                Video tour URL <span style={{ fontWeight: 400, color: '#888' }}>(optional)</span>
-                <input
-                  name="videoTourUrl"
-                  type="url"
-                  value={form.videoTourUrl}
-                  onChange={onChange}
-                  placeholder="https://…"
-                />
-                <span className="admin-field-hint">Direct link to an MP4 video tour</span>
-              </label>
+              Video tour URL <span style={{ fontWeight: 400, color: '#888' }}>(optional)</span>
+              <input
+                name="videoTourUrl"
+                type="url"
+                value={form.videoTourUrl}
+                onChange={onChange}
+                placeholder="https://…"
+              />
+              <span className="admin-field-hint">Direct link to an MP4 video tour</span>
+            </label>
           </fieldset>
 
           {/* ── Actions ── */}
