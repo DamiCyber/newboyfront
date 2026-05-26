@@ -34,6 +34,7 @@
 }
 
 .topbar-inner {
+  
   max-width: 100%;
   margin: 0 auto;
   padding: 10px 16px;
@@ -211,6 +212,12 @@
 
   .api-status-label {
     font-size: 0.7rem;
+  }
+  .topbar-brand {
+   margin-left: -30px;
+  }
+  .nav-toggle {
+   margin-left: 240px;
   }
 }
 @media (max-width: 768px) {
