@@ -370,6 +370,17 @@
   .cb-fab {
     bottom: 20px;
     right: 20px;
+    /* Hide FAB behind the open panel so it never overlaps the input row */
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.25s ease,
+                opacity 0.2s ease;
+  }
+
+  /* When the panel is open, tuck the FAB away — the header's ✕ handles closing */
+  .cb-fab--open {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.7);
   }
 
   .cb-backdrop {
