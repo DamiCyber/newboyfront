@@ -55,7 +55,7 @@
   right: 24px;
   z-index: 999;
   width: 360px;
-  max-height: 560px;
+  max-height: 460px;
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 16px;
@@ -272,9 +272,9 @@
 /* ── Input area ──────────────────────────────────────────────────── */
 .cb-input-wrap {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 8px;
-  padding: 12px 12px 10px;
+  padding: 10px 12px;
   border-top: 1px solid #ebebeb;
   background: #ffffff;
   flex-shrink: 0;
@@ -282,16 +282,17 @@
 
 .cb-input {
   flex: 1;
+  min-width: 0;
   resize: none;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
-  padding: 9px 12px;
+  padding: 8px 12px;
   font-size: 0.88rem;
   font-family: inherit;
   color: #111;
   background: #f9f9f7;
   line-height: 1.45;
-  max-height: 100px;
+  max-height: 80px;
   overflow-y: auto;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -311,8 +312,9 @@
 }
 
 .cb-send {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
   border-radius: 50%;
   background: #111111;
   border: none;
@@ -359,7 +361,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    max-height: 82svh;
+    max-height: 72svh;
     border-radius: 20px 20px 0 0;
     border-bottom: none;
     transform-origin: bottom center;
